@@ -6,6 +6,39 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100">
-    <h1 class="text-4xl">Hello</h1>
+    <header class="p-4">
+      <h1 class="text-4xl">
+        EML to HTML
+      </h1>
+
+      <p class="text-lg">
+        Drag n' drop, or select an <code>.eml</code> file to upload. We'll extract the HTML.
+      </p>
+    </header>
+
+    <main class="p-4">
+      <div class="rounded-lg border-2 border-dashed border-gray-300 min-h-[75vh] flex flex-col place-items-center justify-center gap-4 text-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload size-20 text-gray-300"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+        <div>
+          Drag n' drop, or select  an <code>.eml</code> file to upload
+        </div>
+      </div>
+
+    </main>
+    <footer class="p-4 text-sm text-gray-700">
+      <ul class="flex gap-4">
+        <li>
+          Made by
+          <a target="_blank" href="https://www.linkedin.com/in/markmconnell/">
+            Mark Connell
+          </a>
+        </li>
+        <li>
+          <a target="_blank" href="https://github.com/mconnell/eml2html">
+            Source Code
+          </a>
+        </li>
+      </ul>
+    </footer>
   </body>
 </html>
