@@ -1,0 +1,11 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5678:5678"
+    environment:
+      RACK_ENV: development
+      PORT: 5678
+    command: ["bundle", "exec", "puma", "-p", "5678"]
