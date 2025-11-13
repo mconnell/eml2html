@@ -6,6 +6,7 @@ require "rspec"
 ENV["RACK_ENV"] = "test"
 
 require_relative "../lib/app"
+require_relative "../lib/html_extractor"
 
 run App.freeze.app if defined?(run)
 
