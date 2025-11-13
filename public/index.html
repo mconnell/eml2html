@@ -17,28 +17,83 @@
     </header>
 
     <main class="p-4">
-      <div class="rounded-lg border-2 border-dashed border-gray-300 min-h-[75vh] flex flex-col place-items-center justify-center gap-4 text-lg">
+      <div id="drop-area"
+           class="group rounded-lg border-2 border-dashed border-gray-300
+                  min-h-[75vh] flex flex-col place-items-center justify-center
+                  gap-4 text-lg cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload size-20 text-gray-300"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
-        <div>
-          Drag n' drop, or select  an <code>.eml</code> file to upload
+        <div class="select-none">
+          Drag n' drop, or
+          click to select an <code>.eml</code> file to upload
         </div>
       </div>
 
+      <input id="file-input" type="file" accept=".eml,message/rfc822" class="hidden" />
+
+      <textarea id="text-area"
+                class="hidden min-h-[75vh] w-full rounded-lg p-4 font-mono text-sm">
+      </textarea>
     </main>
     <footer class="p-4 text-sm text-gray-700">
-      <ul class="flex gap-4">
+      <ul class="flex gap-8 list-disc list-inside">
         <li>
-          Made by
-          <a target="_blank" href="https://www.linkedin.com/in/markmconnell/">
-            Mark Connell
+          <a target="_blank" href="https://www.linkedin.com/in/markmconnell/"
+              class="hover:text-sky-700 transition duration-250 border-b border-gray-300 hover:border-sky-300">
+            Made by Mark Connell
           </a>
         </li>
         <li>
-          <a target="_blank" href="https://github.com/mconnell/eml2html">
-            Source Code
+          <a target="_blank" href="https://github.com/mconnell/eml2html"
+              class="hover:text-sky-700 transition duration-250 border-b border-gray-300 hover:border-sky-300">
+            View source code on GitHub
           </a>
         </li>
       </ul>
     </footer>
+
+    <script>
+      const dropArea  = document.getElementById("drop-area");
+      const fileInput = document.getElementById("file-input");
+      const textArea  = document.getElementById("text-area");
+
+      async function handleFile(file) {
+        const fileContent = await file.text();
+
+        const response = await fetch("/eml", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: fileContent,
+        });
+
+        const data = await response.json();
+
+        textArea.innerHTML = data.html;
+        textArea.classList.remove("hidden");
+        dropArea.classList.add("hidden");
+      }
+
+      fileInput.addEventListener("change", (e) => {
+        handleFile(e.target.files[0])
+      });
+
+      dropArea.addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      dropArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropArea.classList.add("border-blue-500", "bg-blue-50");
+      });
+
+      dropArea.addEventListener("dragleave", () => {
+        dropArea.classList.remove("border-blue-500", "bg-blue-50");
+      });
+
+      dropArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropArea.classList.remove("border-blue-500", "bg-blue-50");
+        handleFile(e.dataTransfer.files[0]);
+      });
+    </script>
   </body>
 </html>
