@@ -1,5 +1,7 @@
 # eml2html
 
+This is the source code for the website https://eml2html.com.
+
 ## Development
 
 The app is containerised, and there is a `docker-compose.yml` for convenience.
