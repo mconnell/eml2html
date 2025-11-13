@@ -4,6 +4,7 @@ ruby "3.4.4"
 
 gem "roda"
 gem "mail"
+gem "kamal"
 
 group :test do
   gem "rspec"
