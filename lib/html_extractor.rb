@@ -7,7 +7,7 @@ class HtmlExtractor
 
   def call
     return @mail.body&.decoded if html_only_email?
-    return nil if plan_text_only_email?
+    return nil if plain_text_only_email?
 
     @mail.html_part.body.decoded.to_s
   end
@@ -19,7 +19,7 @@ class HtmlExtractor
       @mail.content_type&.downcase&.include?("text/html")
   end
 
-  def plan_text_only_email?
+  def plain_text_only_email?
     !@mail.multipart? &&
       @mail.content_type&.downcase&.include?("text/plain")
   end
