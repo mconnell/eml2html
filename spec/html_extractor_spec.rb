@@ -4,6 +4,22 @@ RSpec.describe HtmlExtractor do
   subject { described_class.new(eml_string) }
 
   describe "#call" do
+    context "plain text only .eml" do
+      let(:eml_string) do
+        <<~EML
+        Content-Type: text/plain
+
+        Did you know that wearing a tie can reduce blood flow to the brain
+        by 7.5%
+
+        EML
+      end
+
+      it "returns nothing because that's what you deserve for asking an HTML extractor" do
+        expect(subject.call).to eq(nil)
+      end
+    end
+
     context "simple HTML only .eml" do
       let(:eml_string) do
         <<~EML
