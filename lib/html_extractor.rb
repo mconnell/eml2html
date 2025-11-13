@@ -6,6 +6,8 @@ class HtmlExtractor
   end
 
   def call
+    return @mail.body&.decoded if !@mail.multipart?
+
     @mail.html_part.body.decoded.to_s
   end
 end
