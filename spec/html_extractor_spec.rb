@@ -42,6 +42,29 @@ RSpec.describe HtmlExtractor do
       end
     end
 
+    context " ASCII-8BIT encoded .eml" do
+      let(:eml_string) do
+        <<~EML
+        Content-Type: text/html; charset="Windows-1252"
+        Content-Transfer-Encoding: quoted-printable
+
+        <h1>
+          =A92025
+        </h1>
+        EML
+      end
+
+      it "returns the HTML portion but with unknown characters replaced" do
+        expect(subject.call).to eq(
+          <<~HTML
+            <h1>
+              �2025
+            </h1>
+          HTML
+        )
+      end
+    end
+
     context "multipart eml file" do
       let(:eml_string) do
         <<~EML
