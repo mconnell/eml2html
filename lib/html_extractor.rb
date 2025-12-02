@@ -6,15 +6,15 @@ class HtmlExtractor
   end
 
   def call
-    return santisied(@mail.body&.decoded) if html_only_email?
+    return sanitised(@mail.body&.decoded) if html_only_email?
     return nil if plain_text_only_email?
 
-    santisied(@mail.html_part.body.decoded.to_s)
+    sanitised(@mail.html_part.body.decoded.to_s)
   end
 
   private
 
-  def santisied(html)
+  def sanitised(html)
     html.encode("UTF-8", invalid: :replace, undef: :replace, replace: "�")
         .gsub(/\r\n?/, "\n")
   end
