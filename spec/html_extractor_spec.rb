@@ -81,13 +81,13 @@ RSpec.describe HtmlExtractor do
         EML
       end
 
-      it "returns the HTML portion but with ascii characters transliterated" do
+      it "returns the HTML portion but doesn't stomp on accented characters" do
         expect(subject.call).to eq(
           <<~HTML
             <h1>
-              Comparez facilement bus, train et covoit’ pour
-              trouver le voyage qui correspond à vos plans.
-              Au volant ? Vous décidez de tout : itinéraire,
+              Comparez facilement bus, train et covoit’ p=our
+              trouver le voyage qui correspond =C3=A0 vos plans.
+              Au volant ? Vous d==C3=A9cidez de tout : itin=C3=A9raire,
               horaire et prix.
             </h1>
           HTML
