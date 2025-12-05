@@ -6,10 +6,19 @@ class HtmlExtractor
   end
 
   def call
-    return sanitised(html: @mail.body&.decoded, encoding: encoding_for(@mail)) if html_only_email?
     return nil if plain_text_only_email?
 
-    sanitised(html: @mail.html_part.body.decoded, encoding: encoding_for(@mail.html_part))
+    if html_only_email?
+      sanitised(
+        html: @mail.body&.decoded,
+        encoding: encoding_for(@mail)
+      )
+    else
+      sanitised(
+        html: @mail.html_part.body.decoded,
+        encoding: encoding_for(@mail.html_part)
+      )
+    end
   end
 
   private
