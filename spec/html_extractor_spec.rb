@@ -54,11 +54,41 @@ RSpec.describe HtmlExtractor do
         EML
       end
 
-      it "returns the HTML portion but with unknown characters replaced" do
+      it "returns the HTML portion but with characters correct" do
         expect(subject.call).to eq(
           <<~HTML
             <h1>
-              �2025
+              ©2025
+            </h1>
+          HTML
+        )
+      end
+    end
+
+    context "French .eml" do
+      let(:eml_string) do
+        <<~EML
+        Content-Transfer-Encoding: quoted-printable
+        Content-Type: text/html; charset=utf-8
+        Mime-Version: 1.0
+
+        <h1>
+          Comparez facilement bus, train et covoit=E2=80=99 p=our
+          trouver le voyage qui correspond =C3=A0 vos plans.
+          Au volant ? Vous d==C3=A9cidez de tout : itin=C3=A9raire,
+          horaire et prix.
+        </h1>
+        EML
+      end
+
+      it "returns the HTML portion but with ascii characters transliterated" do
+        expect(subject.call).to eq(
+          <<~HTML
+            <h1>
+              Comparez facilement bus, train et covoit’ pour
+              trouver le voyage qui correspond à vos plans.
+              Au volant ? Vous décidez de tout : itinéraire,
+              horaire et prix.
             </h1>
           HTML
         )
