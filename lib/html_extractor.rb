@@ -26,10 +26,8 @@ class HtmlExtractor
   def sanitised(html:, encoding:)
     return if html.nil?
 
-    source_encoding = encoding || "UTF-8"
-
     html
-      .force_encoding(source_encoding)
+      .force_encoding(encoding)
       .encode("UTF-8")
       .gsub(/\r\n?/, "\n")
   end
